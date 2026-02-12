@@ -1,15 +1,29 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { generateImagePdf } from "../lib/pdfLogic"
 import LoadingDots from "./LoadingDots"
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable"
+import SortableImage from "./SortableImage"
 
 export default function Uploader() {
   const [images, setImages] = useState([])
   const [fileName, setFileName] = useState("NoMarkScan")
-  const [isGenerating, setIsGenerating] = useState(false) // STATO PER IL LOADER
+  const [isGenerating, setIsGenerating] = useState(false)
 
   const onDrop = useCallback((acceptedFiles) => {
     const newFiles = acceptedFiles.map((file) =>
@@ -40,6 +54,25 @@ export default function Uploader() {
       }
     }, 100)
   }
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  )
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event
+    if (active.id !== over?.id) {
+      setImages((items) => {
+        const oldIndex = items.findIndex((i) => i.preview === active.id)
+        const newIndex = items.findIndex((i) => i.preview === over.id)
+        return arrayMove(items, oldIndex, newIndex)
+      })
+    }
+  }
+
   return (
     <div className="space-y-8">
       <div
@@ -92,42 +125,29 @@ export default function Uploader() {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {images.map((file, index) => (
-              <div
-                key={index}
-                className="relative group rounded-xl overflow-hidden aspect-square shadow-sm border border-slate-200"
-              >
-                <img
-                  src={file.preview}
-                  alt="preview"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setImages(images.filter((_, i) => i !== index))
-                  }}
-                  className="absolute top-2 right-2 bg-white/90 text-red-600 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={images.map((i) => i.preview)}
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {images.map((file, index) => (
+                  <SortableImage
+                    key={file.preview}
+                    file={file}
+                    index={index}
+                    onRemove={(idx) =>
+                      setImages(images.filter((_, i) => i !== idx))
+                    }
+                  />
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
 
           {images.length > 0 && (
             <div className="flex flex-col items-center space-y-6 pt-10 border-t border-slate-100">
@@ -144,7 +164,6 @@ export default function Uploader() {
                 />
               </div>
 
-              {/* PULSANTE MODIFICATO */}
               <button
                 onClick={handleGeneratePdf}
                 disabled={isGenerating || images.length === 0}
