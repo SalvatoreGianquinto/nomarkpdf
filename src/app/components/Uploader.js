@@ -4,10 +4,13 @@
 import { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { generateImagePdf } from "../lib/pdfLogic"
+import LoadingDots from "./LoadingDots"
 
 export default function Uploader() {
   const [images, setImages] = useState([])
   const [fileName, setFileName] = useState("NoMarkScan")
+  const [isGenerating, setIsGenerating] = useState(false) // STATO PER IL LOADER
+
   const onDrop = useCallback((acceptedFiles) => {
     const newFiles = acceptedFiles.map((file) =>
       Object.assign(file, {
@@ -22,6 +25,21 @@ export default function Uploader() {
     accept: { "image/*": [] },
   })
 
+  const handleGeneratePdf = async () => {
+    if (images.length === 0) return
+
+    setIsGenerating(true)
+
+    setTimeout(async () => {
+      try {
+        await generateImagePdf(images, fileName)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsGenerating(false)
+      }
+    }, 100)
+  }
   return (
     <div className="space-y-8">
       <div
@@ -73,6 +91,7 @@ export default function Uploader() {
               Rimuovi tutte
             </button>
           </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {images.map((file, index) => (
               <div
@@ -125,11 +144,18 @@ export default function Uploader() {
                 />
               </div>
 
+              {/* PULSANTE MODIFICATO */}
               <button
-                onClick={() => generateImagePdf(images, fileName)}
-                className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-16 rounded-2xl shadow-xl shadow-blue-100 transition-all hover:-translate-y-1 active:scale-95"
+                onClick={handleGeneratePdf}
+                disabled={isGenerating || images.length === 0}
+                className={`w-full md:w-auto font-bold py-4 px-16 rounded-2xl shadow-xl transition-all flex items-center justify-center min-w-60 h-15
+                  ${
+                    isGenerating
+                      ? "bg-blue-800 cursor-not-allowed shadow-none"
+                      : "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-100 hover:-translate-y-1 active:scale-95"
+                  }`}
               >
-                Genera e Scarica PDF
+                {isGenerating ? <LoadingDots /> : "Genera e Scarica PDF"}
               </button>
 
               <p className="text-slate-400 text-xs italic">
