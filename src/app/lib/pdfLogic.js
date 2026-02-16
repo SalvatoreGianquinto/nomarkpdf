@@ -51,3 +51,37 @@ export const generateImagePdf = async (images, fileName = "NoMarkScan") => {
   const safeName = fileName.trim() || "NoMarkScan"
   doc.save(safeName.endsWith(".pdf") ? safeName : `${safeName}.pdf`)
 }
+
+export const generateTextPdf = async (text, fileName = "Documento_NoMark") => {
+  if (!text.trim()) return alert("Il testo è vuoto!")
+
+  const doc = new jsPDF({
+    orientation: "p",
+    unit: "mm",
+    format: "a4",
+  })
+
+  const margin = 20
+  const pageWidth = doc.internal.pageSize.getWidth()
+  const pageHeight = doc.internal.pageSize.getHeight()
+  const maxLineWidth = pageWidth - margin * 2
+
+  doc.setFont("helvetica", "normal")
+  doc.setFontSize(11)
+
+  const lines = doc.splitTextToSize(text, maxLineWidth)
+
+  let cursorY = margin
+
+  lines.forEach((line) => {
+    if (cursorY > pageHeight - margin) {
+      doc.addPage()
+      cursorY = margin
+    }
+    doc.text(line, margin, cursorY, { baseline: "top" })
+    cursorY += 7
+  })
+
+  const safeName = fileName.trim() || "Documento_NoMark"
+  doc.save(safeName.endsWith(".pdf") ? safeName : `${safeName}.pdf`)
+}

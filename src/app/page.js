@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Uploader from "./components/Uploader"
 import Navbar from "./components/Navbar"
+import TextEditor from "./components/TextEditor"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("images") // Stato per cambiare tab
@@ -34,7 +35,7 @@ export default function Home() {
               ) : (
                 <div className="text-center py-20">
                   <h3 className="text-xl font-bold text-slate-400 italic">
-                    Editor di Testo in arrivo...
+                    <TextEditor />
                   </h3>
                 </div>
               )}
