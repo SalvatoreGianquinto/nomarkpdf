@@ -33,7 +33,7 @@ export default function Home() {
               {activeTab === "images" ? (
                 <Uploader />
               ) : (
-                <div className="text-center py-20">
+                <div className="text-center">
                   <h3 className="text-xl font-bold text-slate-400 italic">
                     <TextEditor />
                   </h3>

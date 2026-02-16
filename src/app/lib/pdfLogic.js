@@ -52,29 +52,58 @@ export const generateImagePdf = async (images, fileName = "NoMarkScan") => {
   doc.save(safeName.endsWith(".pdf") ? safeName : `${safeName}.pdf`)
 }
 
-export const generateTextPdf = async (text, fileName = "Documento_NoMark") => {
-  if (!text.trim()) return alert("Il testo è vuoto!")
-
-  const doc = new jsPDF({
-    orientation: "p",
-    unit: "mm",
-    format: "a4",
-  })
-
+export const generateTextPdf = async (
+  text,
+  fileName,
+  logo,
+  companyName,
+  companyDetails,
+) => {
+  const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" })
   const margin = 20
-  const pageWidth = doc.internal.pageSize.getWidth()
-  const pageHeight = doc.internal.pageSize.getHeight()
-  const maxLineWidth = pageWidth - margin * 2
+  let cursorY = margin
+
+  if (logo || companyName || companyDetails) {
+    if (logo) {
+      try {
+        const format = logo.includes("png") ? "PNG" : "JPEG"
+        doc.addImage(logo, format, margin, cursorY, 22, 22, undefined, "FAST")
+      } catch (err) {
+        console.error("Errore nel caricamento del logo:", err)
+      }
+    }
+
+    if (companyName) {
+      doc.setFont("helvetica", "bold")
+      doc.setFontSize(14)
+      doc.setTextColor(30, 41, 59)
+      const nameX = logo ? margin + 26 : margin
+      doc.text(companyName.toUpperCase(), nameX, cursorY + 7)
+    }
+
+    if (companyDetails) {
+      doc.setFont("helvetica", "normal")
+      doc.setFontSize(8)
+      doc.setTextColor(100, 116, 139)
+      const detailsLines = doc.splitTextToSize(companyDetails, 70)
+      doc.text(detailsLines, 190, cursorY + 5, { align: "right" })
+    }
+
+    cursorY += 32
+
+    doc.setDrawColor(241, 245, 249)
+    doc.line(margin, cursorY - 5, 190, cursorY - 5)
+  }
 
   doc.setFont("helvetica", "normal")
   doc.setFontSize(11)
+  doc.setTextColor(0, 0, 0)
 
+  const maxLineWidth = 170
   const lines = doc.splitTextToSize(text, maxLineWidth)
 
-  let cursorY = margin
-
   lines.forEach((line) => {
-    if (cursorY > pageHeight - margin) {
+    if (cursorY > 275) {
       doc.addPage()
       cursorY = margin
     }
@@ -82,6 +111,6 @@ export const generateTextPdf = async (text, fileName = "Documento_NoMark") => {
     cursorY += 7
   })
 
-  const safeName = fileName.trim() || "Documento_NoMark"
-  doc.save(safeName.endsWith(".pdf") ? safeName : `${safeName}.pdf`)
+  const finalName = fileName || "Documento_NoMark"
+  doc.save(`${finalName}.pdf`)
 }
