@@ -19,6 +19,7 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable"
 import SortableImage from "./SortableImage"
+import { DocumentArrowDownIcon } from "@heroicons/react/24/outline"
 
 export default function Uploader() {
   const [images, setImages] = useState([])
@@ -150,34 +151,37 @@ export default function Uploader() {
           </DndContext>
 
           {images.length > 0 && (
-            <div className="flex flex-col items-center space-y-6 pt-10 border-t border-slate-100">
-              <div className="w-full max-w-sm">
-                <label className="block text-sm font-bold text-slate-700 mb-2 ml-1">
-                  Nome del file PDF
-                </label>
-                <input
-                  type="text"
-                  value={fileName}
-                  onChange={(e) => setFileName(e.target.value)}
-                  placeholder="Inserisci nome..."
-                  className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all text-slate-800"
-                />
-              </div>
+            <div className="flex flex-col items-center space-y-4 pt-10 border-t border-slate-100">
+              <input
+                type="text"
+                value={fileName}
+                onChange={(e) => setFileName(e.target.value)}
+                className="w-full max-w-xs px-4 py-2 bg-transparent text-center font-bold text-slate-700 outline-none border-b-2 border-transparent focus:border-blue-500 transition-all"
+                placeholder="Nome file"
+              />
 
+              {/* Bottone identico al TextEditor */}
               <button
                 onClick={handleGeneratePdf}
                 disabled={isGenerating || images.length === 0}
-                className={`w-full md:w-auto font-bold py-4 px-16 rounded-2xl shadow-xl transition-all flex items-center justify-center min-w-60 h-15
-                  ${
-                    isGenerating
-                      ? "bg-blue-800 cursor-not-allowed shadow-none"
-                      : "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-100 hover:-translate-y-1 active:scale-95"
-                  }`}
+                className={`w-full md:w-auto font-black py-4 px-12 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-3
+      ${
+        isGenerating || images.length === 0
+          ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+          : "bg-blue-600 text-white hover:bg-blue-700 hover:-translate-y-1 active:scale-95 shadow-blue-100"
+      }`}
               >
-                {isGenerating ? <LoadingDots /> : "Genera e Scarica PDF"}
+                {isGenerating ? (
+                  <LoadingDots />
+                ) : (
+                  <>
+                    <DocumentArrowDownIcon className="w-6 h-6" />
+                    SCARICA PDF
+                  </>
+                )}
               </button>
 
-              <p className="text-slate-400 text-xs italic">
+              <p className="text-slate-400 text-[10px] font-medium italic uppercase tracking-wider">
                 Il file verrà salvato come: {fileName || "NoMarkScan"}.pdf
               </p>
             </div>
