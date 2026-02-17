@@ -8,10 +8,22 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function PasswordPage() {
+  const [length, setLength] = useState(24)
+  const [password, setPassword] = useState("")
+  const [copied, setCopied] = useState(false)
+  const [options, setOptions] = useState({
+    maiuscole: true,
+    minuscole: true,
+    numeri: true,
+    simboli: true,
+  })
+
   const runGeneration = (len, opts) => {
+    if (typeof window === "undefined") return ""
+
     const charSets = {
       maiuscole: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
       minuscole: "abcdefghijklmnopqrstuvwxyz",
@@ -34,23 +46,15 @@ export default function PasswordPage() {
       .join("")
   }
 
-  const [length, setLength] = useState(24)
-  const [options, setOptions] = useState({
-    maiuscole: true,
-    minuscole: true,
-    numeri: true,
-    simboli: true,
-  })
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!password) {
+        setPassword(runGeneration(length, options))
+      }
+    }, 0)
 
-  const [password, setPassword] = useState(() =>
-    runGeneration(24, {
-      maiuscole: true,
-      minuscole: true,
-      numeri: true,
-      simboli: true,
-    }),
-  )
-  const [copied, setCopied] = useState(false)
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleManualGenerate = () => {
     setPassword(runGeneration(length, options))
@@ -83,8 +87,9 @@ export default function PasswordPage() {
   }
 
   const strength = getStrength()
+
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 p-6 md:p-12">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 p-6 md:p-12 font-sans">
       <div className="max-w-4xl mx-auto">
         <header className="mb-12">
           <Link
@@ -110,8 +115,8 @@ export default function PasswordPage() {
           <div className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-16 shadow-sm relative overflow-hidden group">
             <div className="relative z-10 flex flex-col items-center gap-10 text-center">
               <div className="w-full">
-                <div className="text-3xl md:text-5xl font-mono font-medium text-slate-800 break-all tracking-tight mb-4 select-all leading-tight">
-                  {password}
+                <div className="text-3xl md:text-5xl font-mono font-medium text-slate-800 break-all tracking-tight mb-4 select-all leading-tight min-h-[1.2em]">
+                  {password || "••••••••••••••••"}
                 </div>
                 <div className="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
                   <span
