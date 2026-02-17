@@ -39,7 +39,7 @@ export default function Home() {
 
           <header className="text-center mb-12">
             <span className="inline-block px-4 py-1.5 mb-4 text-xs font-semibold tracking-widest text-blue-600 uppercase bg-blue-100 rounded-full">
-              100% Privato & Open Source
+              100% Privato
             </span>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               {activeTab === "images"
@@ -59,9 +59,10 @@ export default function Home() {
               )}
             </div>
           </div>
-
-          <footer className="mt-12 text-center text-slate-400 text-sm italic">
-            Sviluppato per la produttività senza limiti da Salvatore Gianquinto.
+          <footer className="mt-16 text-center border-t border-slate-200 pt-8">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">
+              NoMarkPDF — Local Processing, No Data Tracking
+            </p>
           </footer>
         </div>
       </main>

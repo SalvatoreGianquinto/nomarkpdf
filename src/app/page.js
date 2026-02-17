@@ -66,24 +66,56 @@ export default function LabHome() {
             </div>
             <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl" />
           </div>
-
-          <div className="md:col-span-2 bg-white border border-slate-200 rounded-[2.5rem] p-8 flex items-center justify-between group hover:border-slate-300 transition-colors">
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center group-hover:bg-blue-50 transition-colors">
-                <CpuChipIcon className="w-8 h-8 text-slate-400 group-hover:text-blue-500" />
+          <Link
+            href="/password"
+            className="md:col-span-2 bg-white border border-slate-200 rounded-[2.5rem] p-10 hover:shadow-2xl hover:border-emerald-300 transition-all group relative overflow-hidden flex flex-col justify-between min-h-80"
+          >
+            <div className="relative z-10">
+              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 transition-colors duration-500">
+                <ShieldCheckIcon className="w-7 h-7 text-emerald-500 group-hover:text-white" />
               </div>
-              <div>
-                <h4 className="font-bold text-xl text-slate-400 group-hover:text-slate-900 transition-colors">
-                  Prossimo Tool
-                </h4>
-                <p className="text-slate-400 text-sm italic">
-                  In fase di sviluppo nel Lab...
-                </p>
-              </div>
+              <h3 className="text-3xl font-bold mb-3 tracking-tight">
+                NoMark<span className="text-emerald-500">Pass</span>
+              </h3>
+              <p className="text-slate-500 leading-relaxed max-w-70">
+                {
+                  "Genera chiavi d'accesso inviolabili con entropia hardware locale. Sicurezza totale, zero tracce."
+                }
+              </p>
             </div>
-          </div>
+            <div className="relative z-10 mt-8 flex items-center gap-2 text-emerald-600 font-bold text-xs uppercase tracking-widest">
+              Genera Password{" "}
+              <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+            </div>
+            {/* Effetto luce verde */}
+            <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-emerald-50 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity" />
+          </Link>
 
-          <div className="md:col-span-2 bg-blue-50 border border-blue-100 rounded-[2.5rem] p-8 flex items-center justify-center">
+          <div className="md:col-span-2 bg-slate-900 rounded-[2.5rem] p-10 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-center gap-8 group border border-slate-800">
+            <div className="relative z-10 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.4em]">
+                  Laboratorio Attivo
+                </span>
+              </div>
+              <h3 className="text-white text-3xl font-bold mb-3">
+                Nuovi Tool in arrivo
+              </h3>
+              <p className="text-slate-400 max-w-md leading-relaxed">
+                Sto sviluppando nuovi strumenti per rendere NoMarkLab la tua
+                suite definitiva per la privacy digitale. Sempre 100%
+                client-side.
+              </p>
+            </div>
+
+            {/* Effetto decorativo sullo sfondo */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+          </div>
+          <div className="md:col-span-4 bg-blue-50 border border-blue-100 rounded-[2.5rem] p-8 flex items-center justify-center">
             <p className="text-blue-800 font-medium italic text-center">
               Sviluppato per la produttività senza limiti
             </p>
