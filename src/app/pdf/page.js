@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import Uploader from "./components/Uploader"
-import Navbar from "./components/Navbar"
-import TextEditor from "./components/TextEditor"
+import Navbar from "../components/Navbar"
+import Uploader from "../components/Uploader"
+import TextEditor from "../components/TextEditor"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("images")
