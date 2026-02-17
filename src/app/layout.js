@@ -12,9 +12,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata = {
-  title: "NoMarkPDF",
+  title: "NoMarkLAB",
   description:
-    "Converti foto in PDF in modo privato, veloce e senza filigrana.",
+    "NoMark Lab: la tua suite di strumenti web focalizzata sulla privacy",
 }
 
 export default function RootLayout({ children }) {
