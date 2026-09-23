@@ -10,6 +10,17 @@ import {
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "NoMarkPass",
+  url: "https://nomarklab.app/password",
+  description:
+    "Generatore di password sicure direttamente nel browser, con generazione casuale locale e senza tracciamento.",
+  applicationCategory: "SecurityApplication",
+  operatingSystem: "Web",
+}
+
 export default function PasswordPage() {
   const [length, setLength] = useState(24)
   const [password, setPassword] = useState("")
@@ -90,6 +101,10 @@ export default function PasswordPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 p-6 md:p-12 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="max-w-4xl mx-auto">
         <header className="mb-12">
           <Link
