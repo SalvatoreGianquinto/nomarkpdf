@@ -7,11 +7,26 @@ import TextEditor from "../components/TextEditor"
 import Link from "next/link"
 import { ArrowLeftIcon, SparklesIcon } from "@heroicons/react/24/outline"
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "NoMarkPDF",
+  url: "https://nomarklab.app/pdf",
+  description:
+    "Converti immagini in PDF e crea documenti PDF direttamente nel browser, senza upload dei file e senza tracciamento.",
+  applicationCategory: "ProductivityApplication",
+  operatingSystem: "Web",
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState("images")
 
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className="md:pl-64 pb-24 md:pb-12 pt-8 px-6 transition-all duration-300">
