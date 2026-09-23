@@ -7,9 +7,22 @@ import {
   SparklesIcon,
 } from "@heroicons/react/24/outline"
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "NoMarkLab",
+  url: "https://nomarklab.app/",
+  description:
+    "NoMarkLAB: strumenti web semplici, veloci e focalizzati sulla privacy",
+}
+
 export default function LabHome() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 p-6 md:p-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="max-w-6xl mx-auto">
         <header className="mb-12">
           <div className="flex items-center gap-3 mb-4">
@@ -87,7 +100,6 @@ export default function LabHome() {
               Genera Password{" "}
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
             </div>
-            {/* Effetto luce verde */}
             <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-emerald-50 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity" />
           </Link>
 
@@ -112,7 +124,6 @@ export default function LabHome() {
               </p>
             </div>
 
-            {/* Effetto decorativo sullo sfondo */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
           </div>
           <div className="md:col-span-4 bg-blue-50 border border-blue-100 rounded-[2.5rem] p-8 flex items-center justify-center">
