@@ -12,9 +12,25 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata = {
+  metadataBase: new URL("https://nomarklab.app"),
+
   title: "NoMarkLAB",
   description:
-    "NoMark Lab: la tua suite di strumenti web focalizzata sulla privacy",
+    "NoMarkLAB: strumenti web semplici, veloci e focalizzati sulla privacy.",
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    title: "NoMarkLAB",
+    description:
+      "NoMarkLAB: strumenti web semplici, veloci e focalizzati sulla privacy.",
+    url: "https://nomarklab.app",
+    siteName: "NoMarkLAB",
+    locale: "it_IT",
+    type: "website",
+  },
 }
 
 export default function RootLayout({ children }) {
