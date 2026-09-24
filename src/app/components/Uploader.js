@@ -176,9 +176,9 @@ export default function Uploader() {
             )}
           </div>
           <div>
-            <h3 className="text-xl font-bold text-slate-800">
+            <h1 className="text-xl font-bold text-slate-800">
               {isDragActive ? "Rilascia qui" : "Carica immagini"}
-            </h3>
+            </h1>
             <p className="text-sm text-slate-500 mt-1">
               Tocca per selezionare o trascina i file
             </p>
@@ -196,7 +196,7 @@ export default function Uploader() {
               <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-black">
                 {images.length}
               </span>
-              <h3 className="font-bold text-slate-800 text-lg">Selezionate</h3>
+              <h2 className="font-bold text-slate-800 text-lg">Selezionate</h2>
             </div>
             <button
               onClick={() => setImages([])}

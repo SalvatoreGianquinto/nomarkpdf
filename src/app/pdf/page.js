@@ -53,7 +53,7 @@ export default function Home() {
           </nav>
 
           <header className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 mb-4 text-xs font-semibold tracking-widest text-blue-600 uppercase bg-blue-100 rounded-full">
+            <span className="inline-block px-4 py-1.5 mb-4 text-xs font-semibold tracking-widest text-blue-900 uppercase bg-blue-300 rounded-full">
               100% Privato
             </span>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
