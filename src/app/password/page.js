@@ -109,7 +109,7 @@ export default function PasswordPage() {
         <header className="mb-12">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-slate-400 hover:text-blue-600 transition-colors group mb-8"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors group mb-8"
           >
             <ArrowLeftIcon className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span className="text-xs font-bold uppercase tracking-widest">
@@ -121,7 +121,7 @@ export default function PasswordPage() {
               <ShieldCheckIcon className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">
-              NoMark<span className="text-emerald-500">Pass</span>
+              NoMark<span className="text-green-600">Pass</span>
             </h1>
           </div>
         </header>
@@ -133,7 +133,7 @@ export default function PasswordPage() {
                 <div className="text-3xl md:text-5xl font-mono font-medium text-slate-800 break-all tracking-tight mb-4 select-all leading-tight min-h-[1.2em]">
                   {password || "••••••••••••••••"}
                 </div>
-                <div className="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                <div className="flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-600">
                   <span
                     className={`w-2 h-2 rounded-full ${strength.color} animate-pulse`}
                   />
@@ -172,15 +172,21 @@ export default function PasswordPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white border border-slate-200 rounded-[2.5rem] p-8">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">
+                <label
+                  for="pwd-lenght"
+                  className="text-xs font-black uppercase tracking-widest text-slate-600"
+                >
                   Lunghezza
-                </h3>
+                </label>
                 <span className="text-xl font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg">
                   {length}
                 </span>
               </div>
+
               <input
                 type="range"
+                id="pwd-lenght"
+                name="password_lenght"
                 min="8"
                 max="64"
                 value={length}
@@ -208,7 +214,7 @@ export default function PasswordPage() {
         </main>
 
         <footer className="mt-16 text-center border-t border-slate-200 pt-8">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">
+          <p className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.4em]">
             NoMarkPass — 100% Client-Side Privacy
           </p>
         </footer>
